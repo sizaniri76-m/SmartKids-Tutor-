@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SmartKids Tutor AI - سمارت كيدز</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --primary-light: #9D97FF;
+            --primary-dark: #4A42D4;
+            --secondary: #FF6B9D;
+            --accent: #00D9A5;
+            --warning: #FFB946;
+            --success: #48C774;
+            --error: #FF6B6B;
+            --background: #F8F9FF;
+            --card-bg: #FFFFFF;
+            --text-primary: #2D3748;
+            --text-secondary: #718096;
+            --text-light: #A0AEC0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: var(--background);
+            min-height: 100vh;
+            color: var(--text-primary);
+        }
+
+        /* App Container - Mobile Frame */
+        .app-container {
+            max-width: 420px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--background);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Header Gradient */
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            padding: 40px 20px 80px;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            color: white;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .greeting {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .child-name {
+            font-size: 32px;
+            font-weight: 800;
+            margin-top: 5px;
+        }
+
+        .child-switcher {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .child-switcher:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Child Card */
+        .child-card {
+            background: white;
+            border-radius: 20px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .child-card:hover {
+            transform: scale(1.02);
+        }
+
+        .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+
+        .child-info h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .child-info p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Actions Section */
+        .actions-section {
+            padding: 20px;
+            margin-top: -40px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .action-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px 16px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .action-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 28px;
+        }
+
+        .action-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Motivation Card */
+        .motivation-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            margin: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .motivation-emoji {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .motivation-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .motivation-subtext {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 420px;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .nav-item.active {
+            background: rgba(108, 99, 255, 0.1);
+        }
+
+        .nav-icon {
+            font-size: 24px;
+        }
+
+        .nav-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .nav-item.active .nav-label {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 420px;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            padding: 20px;
+            padding-bottom: 40px;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .modal-handle {
+            width: 40px;
+            height: 4px;
+            background: var(--text-light);
+            border-radius: 2px;
+            margin: 0 auto 20px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Screens */
+        .screen {
+            display: none;
+            padding-bottom: 100px;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* Upload Screen */
+        .upload-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upload-card:hover {
+            transform: translateX(-5px);
+        }
+
+        .upload-icon-bg {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .upload-info {
+            flex: 1;
+        }
+
+        .upload-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .upload-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Timer Screen */
+        .timer-container {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .timer-circle {
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: rgba(108, 99, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+            }
+        }
+
+        .timer-text {
+            font-size: 64px;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .timer-label {
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+
+        .duration-options {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .duration-btn {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: none;
+            background: white;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .duration-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Large Button */
+        .large-btn {
+            width: 100%;
+            padding: 18px 32px;
+            border-radius: 20px;
+            border: none;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .large-btn.primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .large-btn.primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Progress Screen */
+        .progress-banner {
+            background: var(--primary);
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .progress-emoji {
+            font-size: 48px;
+        }
+
+        .progress-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .streak-text {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .stat-grid {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .progress-bar {
+            height: 12px;
+            background: var(--background);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--success);
+            border-radius: 6px;
+            transition: width 1s ease;
+        }
+
+        /* Screen Header */
+        .screen-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px;
+            padding-top: 40px;
+        }
+
+        .back-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--background);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .screen-title {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        /* Night mode toggle in corner */
+        .night-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            border: none;
+        }
+
+        /* Night Mode */
+        body.night-mode {
+            --background: #1A1A2E;
+            --card-bg: #252542;
+            --text-primary: #E8E8F0;
+            --text-secondary: #A0A0B8;
+        }
+
+        body.night-mode .action-card,
+        body.night-mode .motivation-card,
+        body.night-mode .child-card,
+        body.night-mode .upload-card,
+        body.night-mode .stat-card,
+        body.night-mode .bottom-nav {
+            background: var(--card-bg);
+        }
+
+        body.night-mode .back-btn {
+            background: var(--card-bg);
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 28px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--text-light);
+            transition: .3s;
+            border-radius: 28px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        .toggle-switch input:checked+.toggle-slider {
+            background-color: var(--primary);
+        }
+
+        .toggle-switch input:checked+.toggle-slider:before {
+            transform: translateX(22px);
+        }
+
+        /* Setting Options */
+        .setting-option {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .setting-option:hover {
+            background: rgba(108, 99, 255, 0.05);
+        }
+
+        .check-circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        body.night-mode .setting-option:hover {
+            background: rgba(108, 99, 255, 0.1);
+        }
+
+        /* Subject Buttons */
+        .subject-btn {
+            padding: 10px 16px;
+            border-radius: 20px;
+            border: 2px solid var(--text-light);
+            background: transparent;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .subject-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Tab Buttons */
+        .tab-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: none;
+            background: var(--background);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s;
+            color: var(--text-secondary);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Answer Buttons */
+        .answer-btn {
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: 2px solid var(--text-light);
+            background: transparent;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .answer-btn.correct {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+
+        .answer-btn.wrong {
+            background: var(--error);
+            color: white;
+            border-color: var(--error);
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--background);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        body.night-mode .subject-btn,
+        body.night-mode .answer-btn {
+            border-color: var(--text-secondary);
+            color: var(--text-primary);
+        }
+
+        body.night-mode .tab-btn {
+            background: var(--card-bg);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Night Mode Toggle -->
+    <button class="night-toggle" onclick="toggleNightMode()">🌙</button>
+
+    <div class="app-container">
+        <!-- Home Screen -->
+        <div class="screen active" id="home-screen">
+            <div class="header">
+                <div class="header-top">
+                    <div>
+                        <div class="greeting">أهلاً بك! 👋</div>
+                        <div class="child-name">أحمد</div>
+                    </div>
+                    <div class="child-switcher" onclick="showChildSwitcher()">
+                        <span>👤</span>
+                        <span>اختر طفل</span>
+                    </div>
+                </div>
+                <div class="child-card" onclick="showScreen('profile-screen')">
+                    <div class="avatar" style="background: #FF6B6B;">👦</div>
+                    <div class="child-info">
+                        <h3>أحمد</h3>
+                        <p>الصف الرابع • 10 سنوات</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions-section">
+                <div class="section-title">ماذا تريد أن تفعل اليوم؟</div>
+                <div class="actions-grid">
+                    <div class="action-card" onclick="showScreen('lessons-screen')">
+                        <div class="action-icon" style="background: rgba(108, 99, 255, 0.15);">📚</div>
+                        <div class="action-title">دروسي</div>
+                    </div>
+                    <div class="action-card" onclick="showScreen('upload-screen')">
+                        <div class="action-icon" style="background: rgba(0, 217, 165, 0.15);">📤</div>
+                        <div class="action-title">رفع درس</div>
+                    </div>
+                    <div class="action-card" onclick="showScreen('timer-screen')">
+                        <div class="action-icon" style="background: rgba(255, 107, 157, 0.15);">⏱️</div>
+                        <div class="action-title">جلسة دراسة</div>
+                    </div>
+                    <div class="action-card" onclick="showScreen('progress-screen')">
+                        <div class="action-icon" style="background: rgba(255, 185, 70, 0.15);">📊</div>
+                        <div class="action-title">تقدمي</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="motivation-card">
+                <div class="motivation-emoji">⭐</div>
+                <div class="motivation-text">ممتاز! أنت رائع!</div>
+                <div class="motivation-subtext">استمر في التعلم والاكتشاف!</div>
+            </div>
+        </div>
+
+        <!-- Upload Screen -->
+        <div class="screen" id="upload-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="showScreen('home-screen')">←</button>
+                <div class="screen-title">رفع درس ⭐</div>
+            </div>
+            <div style="padding: 20px;">
+                <p style="text-align: center; color: var(--text-secondary); margin-bottom: 20px;">اختر طريقة رفع الدرس
+                </p>
+
+                <div class="upload-card" onclick="handleUpload('image')">
+                    <div class="upload-icon-bg" style="background: rgba(108, 99, 255, 0.15);">🖼️</div>
+                    <div class="upload-info">
+                        <div class="upload-title">رفع صورة</div>
+                        <div class="upload-desc">صورة من المعرض</div>
+                    </div>
+                    <span style="color: var(--text-secondary);">←</span>
+                </div>
+
+                <div class="upload-card" onclick="handleUpload('camera')">
+                    <div class="upload-icon-bg" style="background: rgba(0, 217, 165, 0.15);">📷</div>
+                    <div class="upload-info">
+                        <div class="upload-title">التقاط صورة</div>
+                        <div class="upload-desc">استخدم الكاميرا</div>
+                    </div>
+                    <span style="color: var(--text-secondary);">←</span>
+                </div>
+
+                <div class="upload-card" onclick="handleUpload('pdf')">
+                    <div class="upload-icon-bg" style="background: rgba(255, 107, 157, 0.15);">📄</div>
+                    <div class="upload-info">
+                        <div class="upload-title">رفع PDF</div>
+                        <div class="upload-desc">كتاب أو ملف PDF</div>
+                    </div>
+                    <span style="color: var(--text-secondary);">←</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timer Screen -->
+        <div class="screen" id="timer-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="showScreen('home-screen')">←</button>
+                <div class="screen-title">جلسة الدراسة</div>
+            </div>
+            <div class="timer-container">
+                <div class="timer-circle">
+                    <div class="timer-text" id="timer-display">25:00</div>
+                    <div class="timer-label">دقيقة</div>
+                </div>
+
+                <div class="section-title" style="text-align: center;">حدد المدة</div>
+                <div class="duration-options">
+                    <button class="duration-btn" onclick="setDuration(15)">15</button>
+                    <button class="duration-btn" onclick="setDuration(20)">20</button>
+                    <button class="duration-btn active" onclick="setDuration(25)">25</button>
+                    <button class="duration-btn" onclick="setDuration(30)">30</button>
+                    <button class="duration-btn" onclick="setDuration(45)">45</button>
+                </div>
+
+                <button class="large-btn primary" onclick="startTimer()">
+                    <span>▶️</span> ابدأ الدراسة
+                </button>
+            </div>
+        </div>
+
+        <!-- Progress Screen -->
+        <div class="screen" id="progress-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="showScreen('home-screen')">←</button>
+                <div class="screen-title">تقدمي</div>
+            </div>
+            <div style="padding: 20px;">
+                <div class="progress-banner">
+                    <div class="progress-emoji">👦</div>
+                    <div>
+                        <div class="progress-name">أحمد</div>
+                        <div class="streak-text">🔥 5 أيام متتالية</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-title">⏱️ وقت الدراسة</div>
+                    <div class="stat-grid">
+                        <div class="stat-item">
+                            <div class="stat-value" style="color: var(--primary);">45 دقيقة</div>
+                            <div class="stat-label">اليوم</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" style="color: var(--accent);">3 ساعات</div>
+                            <div class="stat-label">هذا الأسبوع</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" style="color: var(--secondary);">12 ساعة</div>
+                            <div class="stat-label">هذا الشهر</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-title">📚 الدروس المكتملة</div>
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <div class="progress-bar" style="flex: 1;">
+                            <div class="progress-fill" style="width: 60%;"></div>
+                        </div>
+                        <div style="font-weight: 700;">12 / 20</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 16px;">
+                    <div class="stat-card" style="flex: 1; background: rgba(72, 199, 116, 0.1);">
+                        <div class="stat-title" style="color: var(--success);">💪 نقاط القوة</div>
+                        <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
+                            <span>✓</span> الرياضيات
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
+                            <span>✓</span> العلوم
+                        </div>
+                    </div>
+                    <div class="stat-card" style="flex: 1; background: rgba(255, 185, 70, 0.1);">
+                        <div class="stat-title" style="color: var(--warning);">📈 يحتاج تحسين</div>
+                        <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
+                            <span>→</span> اللغة العربية
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lessons Screen -->
+        <div class="screen" id="lessons-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="showScreen('home-screen')">←</button>
+                <div class="screen-title" style="flex: 1;">دروسي</div>
+                <button
+                    style="width: 44px; height: 44px; border-radius: 50%; background: var(--primary); color: white; border: none; font-size: 24px; cursor: pointer;"
+                    onclick="showScreen('upload-screen')">+</button>
+            </div>
+            <div style="padding: 20px; text-align: center;">
+                <div style="font-size: 80px; margin-bottom: 20px;">📚</div>
+                <div style="font-size: 24px; font-weight: 700; margin-bottom: 8px;">لا توجد دروس بعد</div>
+                <div style="color: var(--text-secondary); margin-bottom: 24px;">أضف درسك الأول</div>
+                <button class="large-btn primary" onclick="showScreen('upload-screen')">
+                    <span>📤</span> رفع درس
+                </button>
+            </div>
+        </div>
+
+        <!-- Settings Screen -->
+        <div class="screen" id="settings-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="showScreen('home-screen')">←</button>
+                <div class="screen-title">الإعدادات</div>
+            </div>
+            <div style="padding: 20px;">
+                <!-- Display Section -->
+                <div style="margin-bottom: 24px;">
+                    <div
+                        style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase;">
+                        العرض</div>
+                    <div class="stat-card" style="margin-bottom: 0;">
+                        <div
+                            style="display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--background);">
+                            <span style="font-size: 24px; margin-left: 12px;">🌙</span>
+                            <div style="flex: 1;">
+                                <div style="font-weight: 600;">الوضع الليلي</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="nightModeToggle" onchange="toggleNightMode()">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div style="display: flex; align-items: center; padding: 12px 0;">
+                            <span style="font-size: 24px; margin-left: 12px;">⏰</span>
+                            <div style="flex: 1;">
+                                <div style="font-weight: 600;">تفعيل تلقائي مساءً</div>
+                                <div style="font-size: 12px; color: var(--text-secondary);">يُفعّل بعد الساعة 7 مساءً
+                                </div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Language Section -->
+                <div style="margin-bottom: 24px;">
+                    <div
+                        style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase;">
+                        اللغة</div>
+                    <div class="stat-card" style="margin-bottom: 0;">
+                        <div class="setting-option selected" onclick="selectLanguage(this, 'ar')">
+                            <span style="font-size: 24px; margin-left: 12px;">🇸🇦</span>
+                            <div style="flex: 1; font-weight: 600;">العربية</div>
+                            <div class="check-circle">✓</div>
+                        </div>
+                        <div class="setting-option" onclick="selectLanguage(this, 'en')"
+                            style="border-top: 1px solid var(--background);">
+                            <span style="font-size: 24px; margin-left: 12px;">🇺🇸</span>
+                            <div style="flex: 1; font-weight: 600;">English</div>
+                            <div class="check-circle" style="opacity: 0;">✓</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Section -->
+                <div style="margin-bottom: 24px;">
+                    <div
+                        style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase;">
+                        الأمان</div>
+                    <div class="stat-card" style="margin-bottom: 0;">
+                        <div class="setting-option" onclick="showPinSetup()" style="cursor: pointer;">
+                            <span style="font-size: 24px; margin-left: 12px;">🔒</span>
+                            <div style="flex: 1;">
+                                <div style="font-weight: 600;">الرقابة الأبوية</div>
+                                <div style="font-size: 12px; color: var(--success);">مُفعّلة</div>
+                            </div>
+                            <span style="color: var(--text-secondary);">←</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other Section -->
+                <div style="margin-bottom: 24px;">
+                    <div
+                        style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase;">
+                        أخرى</div>
+                    <div class="stat-card" style="margin-bottom: 0;">
+                        <div class="setting-option" style="cursor: pointer;">
+                            <span style="font-size: 24px; margin-left: 12px;">🔔</span>
+                            <div style="flex: 1; font-weight: 600;">الإشعارات</div>
+                            <span style="color: var(--text-secondary);">←</span>
+                        </div>
+                        <div class="setting-option" style="border-top: 1px solid var(--background); cursor: pointer;">
+                            <span style="font-size: 24px; margin-left: 12px;">❓</span>
+                            <div style="flex: 1; font-weight: 600;">المساعدة</div>
+                            <span style="color: var(--text-secondary);">←</span>
+                        </div>
+                        <div class="setting-option" style="border-top: 1px solid var(--background); cursor: pointer;">
+                            <span style="font-size: 24px; margin-left: 12px;">ℹ️</span>
+                            <div style="flex: 1; font-weight: 600;">عن التطبيق</div>
+                            <span style="color: var(--text-secondary);">←</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Version -->
+                <div style="text-align: center; color: var(--text-secondary); font-size: 14px;">
+                    SmartKids Tutor AI v1.0.0
+                </div>
+            </div>
+        </div>
+
+        <!-- Lesson Preview Screen -->
+        <div class="screen" id="lesson-preview-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="showScreen('upload-screen')">←</button>
+                <div class="screen-title">معاينة الدرس</div>
+            </div>
+            <div style="padding: 20px;">
+                <!-- File Preview Area -->
+                <div id="file-preview-container"
+                    style="background: var(--card-bg); border-radius: 20px; padding: 20px; text-align: center; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
+                    <div id="preview-icon" style="font-size: 80px; margin-bottom: 16px;">📄</div>
+                    <div id="preview-filename" style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">
+                        lesson_math.jpg</div>
+                    <div id="preview-type" style="color: var(--text-secondary); font-size: 14px;">صورة • 2.4 MB</div>
+                </div>
+
+                <!-- Lesson Title Input -->
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">عنوان الدرس</label>
+                    <input type="text" id="lesson-title-input" placeholder="مثال: درس الرياضيات - الكسور"
+                        style="width: 100%; padding: 16px; border-radius: 12px; border: 2px solid var(--text-light); font-size: 16px; font-family: 'Tajawal', sans-serif; box-sizing: border-box;">
+                </div>
+
+                <!-- Subject Selection -->
+                <div style="margin-bottom: 24px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">المادة</label>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <button class="subject-btn active" onclick="selectSubject(this)">📐 الرياضيات</button>
+                        <button class="subject-btn" onclick="selectSubject(this)">🔬 العلوم</button>
+                        <button class="subject-btn" onclick="selectSubject(this)">📖 اللغة العربية</button>
+                        <button class="subject-btn" onclick="selectSubject(this)">🌍 الاجتماعيات</button>
+                        <button class="subject-btn" onclick="selectSubject(this)">🇬🇧 الإنجليزية</button>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <button class="large-btn primary" onclick="startAIExplanation()" style="margin-bottom: 12px;">
+                    <span>🤖</span> اشرح لي بالذكاء الاصطناعي
+                </button>
+                <button class="large-btn" onclick="saveLesson()" style="background: var(--accent); color: white;">
+                    <span>💾</span> حفظ للمراجعة لاحقاً
+                </button>
+            </div>
+        </div>
+
+        <!-- AI Explanation Screen -->
+        <div class="screen" id="ai-explanation-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="showScreen('lesson-preview-screen')">←</button>
+                <div class="screen-title" style="flex: 1;">شرح الدرس</div>
+                <button onclick="speakExplanation()"
+                    style="width: 44px; height: 44px; border-radius: 50%; background: var(--primary); color: white; border: none; font-size: 20px; cursor: pointer;">🔊</button>
+            </div>
+
+            <!-- Loading State -->
+            <div id="ai-loading" style="padding: 60px 20px; text-align: center;">
+                <div class="loading-spinner"></div>
+                <div style="font-size: 20px; font-weight: 600; margin-top: 20px;">جاري التحليل...</div>
+                <div style="color: var(--text-secondary); margin-top: 8px;">الذكاء الاصطناعي يقرأ درسك 🤔</div>
+            </div>
+
+            <!-- Explanation Content -->
+            <div id="ai-content" style="padding: 20px; display: none;">
+                <!-- Tabs -->
+                <div style="display: flex; gap: 8px; margin-bottom: 20px;">
+                    <button class="tab-btn active" onclick="showTab('explain')">💡 الشرح</button>
+                    <button class="tab-btn" onclick="showTab('examples')">📝 أمثلة</button>
+                    <button class="tab-btn" onclick="showTab('exercises')">✏️ تمارين</button>
+                </div>
+
+                <!-- Tab Content -->
+                <div id="tab-explain" class="tab-content active">
+                    <div class="stat-card" style="background: rgba(108, 99, 255, 0.1);">
+                        <div style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">💡 شرح مبسط</div>
+                        <p style="line-height: 1.8; font-size: 16px;">
+                            هذا الدرس يتحدث عن <strong>الكسور</strong> في الرياضيات! 📚
+                        </p>
+                        <p style="line-height: 1.8; font-size: 16px; margin-top: 12px;">
+                            الكسر هو جزء من شيء كامل. تخيل معي أن لديك بيتزا 🍕 وقسمتها إلى 4 قطع متساوية. إذا أكلت قطعة
+                            واحدة، فأنت أكلت <strong>¼</strong> (ربع) البيتزا!
+                        </p>
+                        <p style="line-height: 1.8; font-size: 16px; margin-top: 12px;">
+                            الرقم في الأعلى يسمى <strong>البسط</strong> (عدد القطع التي لديك)، والرقم في الأسفل يسمى
+                            <strong>المقام</strong> (العدد الكلي للقطع).
+                        </p>
+                    </div>
+                </div>
+
+                <div id="tab-examples" class="tab-content" style="display: none;">
+                    <div class="stat-card" style="background: rgba(0, 217, 165, 0.1); margin-bottom: 12px;">
+                        <div style="font-weight: 700; margin-bottom: 8px;">مثال 1: 🍕</div>
+                        <p>إذا قسمنا بيتزا إلى 8 قطع وأكلنا 3 قطع، نكتب: <strong>³⁄₈</strong></p>
+                    </div>
+                    <div class="stat-card" style="background: rgba(255, 107, 157, 0.1); margin-bottom: 12px;">
+                        <div style="font-weight: 700; margin-bottom: 8px;">مثال 2: 🍫</div>
+                        <p>لوح شوكولاته مقسم إلى 6 قطع، أخذنا 2 قطعة: <strong>²⁄₆ = ¹⁄₃</strong></p>
+                    </div>
+                    <div class="stat-card" style="background: rgba(255, 185, 70, 0.1);">
+                        <div style="font-weight: 700; margin-bottom: 8px;">مثال 3: 🎂</div>
+                        <p>كعكة عيد ميلاد قسمناها لـ 10 أشخاص، لكل شخص: <strong>¹⁄₁₀</strong></p>
+                    </div>
+                </div>
+
+                <div id="tab-exercises" class="tab-content" style="display: none;">
+                    <div class="stat-card" style="margin-bottom: 12px;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                            <span
+                                style="width: 28px; height: 28px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">1</span>
+                            <span style="font-weight: 600;">سؤال اختياري</span>
+                        </div>
+                        <p style="margin-bottom: 12px;">إذا كان لديك 8 تفاحات وأعطيت صديقك 2، ما الكسر الذي أعطيته؟</p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <button class="answer-btn" onclick="checkAnswer(this, false)">½</button>
+                            <button class="answer-btn" onclick="checkAnswer(this, true)">¼</button>
+                            <button class="answer-btn" onclick="checkAnswer(this, false)">⅓</button>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                            <span
+                                style="width: 28px; height: 28px; background: var(--accent); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">2</span>
+                            <span style="font-weight: 600;">سؤال مفتوح</span>
+                        </div>
+                        <p>ارسم دائرة واقسمها إلى كسر تختاره، ثم لونه! 🎨</p>
+                    </div>
+                </div>
+
+                <!-- Encouragement -->
+                <div
+                    style="text-align: center; margin-top: 24px; padding: 20px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-radius: 20px; color: white;">
+                    <div style="font-size: 32px; margin-bottom: 8px;">⭐</div>
+                    <div style="font-size: 20px; font-weight: 700;">أحسنت! أنت ذكي جداً!</div>
+                    <div style="opacity: 0.9; margin-top: 4px;">استمر في التعلم والاكتشاف 🚀</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <div class="nav-item active" onclick="showScreen('home-screen')">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">الرئيسية</span>
+            </div>
+            <div class="nav-item" onclick="showScreen('lessons-screen')">
+                <span class="nav-icon">📚</span>
+                <span class="nav-label">دروسي</span>
+            </div>
+            <div class="nav-item" onclick="showScreen('timer-screen')">
+                <span class="nav-icon">⏱️</span>
+                <span class="nav-label">المؤقت</span>
+            </div>
+            <div class="nav-item" onclick="showScreen('progress-screen')">
+                <span class="nav-icon">📊</span>
+                <span class="nav-label">تقدمي</span>
+            </div>
+            <div class="nav-item" onclick="showScreen('settings-screen')">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-label">الإعدادات</span>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Child Switcher Modal -->
+    <div class="modal-overlay" id="child-modal">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-handle"></div>
+            <div class="modal-title">اختر الطفل</div>
+            <div class="child-card" onclick="selectChild('أحمد')" style="border: 3px solid var(--primary);">
+                <div class="avatar" style="background: #FF6B6B;">👦</div>
+                <div class="child-info">
+                    <h3>أحمد</h3>
+                    <p>الصف الرابع</p>
+                </div>
+                <div
+                    style="width: 28px; height: 28px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">
+                    ✓</div>
+            </div>
+            <div class="child-card" onclick="selectChild('سارة')">
+                <div class="avatar" style="background: #4ECDC4;">👧</div>
+                <div class="child-info">
+                    <h3>سارة</h3>
+                    <p>الصف الثاني</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Explanation Modal -->
+    <div class="modal-overlay" id="explanation-modal">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-handle"></div>
+            <div class="modal-title">💡 شرح الدرس</div>
+            <div style="text-align: center; padding: 20px;">
+                <div style="font-size: 48px; margin-bottom: 16px;">🤔</div>
+                <div style="font-size: 18px; margin-bottom: 8px;">جاري الشرح...</div>
+                <div style="color: var(--text-secondary);">أنتظر لحظة</div>
+            </div>
+            <div style="padding: 20px; display: none;" id="explanation-content">
+                <div style="background: var(--background); padding: 16px; border-radius: 16px; margin-bottom: 16px;">
+                    <p style="font-size: 16px; line-height: 1.8;">هذا الدرس يتحدث عن موضوع مهم جداً! 📚</p>
+                    <p style="font-size: 16px; line-height: 1.8; margin-top: 12px;">دعني أشرح لك بطريقة سهلة وممتعة...
+                    </p>
+                    <p style="font-size: 16px; line-height: 1.8; margin-top: 12px;">تخيل معي أننا نكتشف شيئاً جديداً
+                        معاً! 🌟</p>
+                </div>
+                <div style="text-align: center; color: var(--accent); font-size: 18px; font-weight: 700;">
+                    أحسنت! أنت ذكي جداً! 🧠
+                </div>
+            </div>
+            <button class="large-btn primary" style="margin: 20px;" onclick="hideExplanation()">
+                تم الفهم ✓
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Screen navigation
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+
+            // Update nav
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            if (screenId === 'home-screen') {
+                document.querySelector('.nav-item:nth-child(1)').classList.add('active');
+            } else if (screenId === 'lessons-screen') {
+                document.querySelector('.nav-item:nth-child(2)').classList.add('active');
+            } else if (screenId === 'timer-screen') {
+                document.querySelector('.nav-item:nth-child(3)').classList.add('active');
+            } else if (screenId === 'progress-screen') {
+                document.querySelector('.nav-item:nth-child(4)').classList.add('active');
+            } else if (screenId === 'settings-screen') {
+                document.querySelector('.nav-item:nth-child(5)').classList.add('active');
+                // Sync night mode toggle with current state
+                document.getElementById('nightModeToggle').checked = document.body.classList.contains('night-mode');
+            }
+        }
+
+        // Child switcher modal
+        function showChildSwitcher() {
+            document.getElementById('child-modal').classList.add('active');
+        }
+
+        function selectChild(name) {
+            document.querySelector('.child-name').textContent = name;
+            document.getElementById('child-modal').classList.remove('active');
+        }
+
+        // Close modal on overlay click
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', function () {
+                this.classList.remove('active');
+            });
+        });
+
+        // Timer
+        let selectedDuration = 25;
+
+        function setDuration(mins) {
+            selectedDuration = mins;
+            document.getElementById('timer-display').textContent = mins + ':00';
+            document.querySelectorAll('.duration-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function startTimer() {
+            alert('جلسة الدراسة بدأت! ⏱️\n\nركز على دراستك لمدة ' + selectedDuration + ' دقيقة.\n\nأنت تستطيع! 💪');
+        }
+
+        // Night mode
+        function toggleNightMode() {
+            document.body.classList.toggle('night-mode');
+            const btn = document.querySelector('.night-toggle');
+            const isNight = document.body.classList.contains('night-mode');
+            btn.textContent = isNight ? '☀️' : '🌙';
+            // Sync checkbox if on settings page
+            const toggle = document.getElementById('nightModeToggle');
+            if (toggle) toggle.checked = isNight;
+        }
+
+        // Language selection
+        function selectLanguage(element, lang) {
+            document.querySelectorAll('.setting-option').forEach(opt => {
+                const check = opt.querySelector('.check-circle');
+                if (check) check.style.opacity = '0';
+            });
+            const check = element.querySelector('.check-circle');
+            if (check) check.style.opacity = '1';
+
+            if (lang === 'en') {
+                alert('Language changed to English!\n\nNote: Full translation coming soon.');
+            }
+        }
+
+        // PIN setup
+        function showPinSetup() {
+            alert('🔒 الرقابة الأبوية\n\nالرمز السري الحالي: ****\n\n• تغيير الرمز السري\n• قفل الإعدادات\n• حماية التقارير');
+        }
+
+        // Explanation modal
+        function showExplanation() {
+            const modal = document.getElementById('explanation-modal');
+            const content = document.getElementById('explanation-content');
+            modal.classList.add('active');
+            content.style.display = 'none';
+
+            setTimeout(() => {
+                content.style.display = 'block';
+                content.previousElementSibling.style.display = 'none';
+            }, 2000);
+        }
+
+        function hideExplanation() {
+            document.getElementById('explanation-modal').classList.remove('active');
+        }
+
+        // Handle upload buttons
+        function handleUpload(type) {
+            const input = document.createElement('input');
+            input.type = 'file';
+
+            if (type === 'image') {
+                input.accept = 'image/*';
+                input.onchange = function (e) {
+                    if (e.target.files.length > 0) {
+                        const fileName = e.target.files[0].name;
+                        alert('✅ تم اختيار الصورة!\n\n📷 ' + fileName + '\n\nجاري رفع الدرس...');
+                        showScreen('lessons-screen');
+                    }
+                };
+                input.click();
+            } else if (type === 'camera') {
+                input.accept = 'image/*';
+                input.capture = 'environment';
+                input.onchange = function (e) {
+                    if (e.target.files.length > 0) {
+                        const fileName = e.target.files[0].name;
+                        alert('✅ تم التقاط الصورة!\n\n📸 ' + fileName + '\n\nجاري رفع الدرس...');
+                        showScreen('lessons-screen');
+                    }
+                };
+                input.click();
+            } else if (type === 'pdf') {
+                input.accept = '.pdf,application/pdf';
+                input.onchange = function (e) {
+                    if (e.target.files.length > 0) {
+                        const fileName = e.target.files[0].name;
+                        alert('✅ تم اختيار ملف PDF!\n\n📄 ' + fileName + '\n\nجاري رفع الدرس...');
+                        showScreen('lessons-screen');
+                    }
+                };
+                input.click();
+            }
+        }
+    </script>
+</body>
+
+</html>
